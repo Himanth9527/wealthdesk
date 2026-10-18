@@ -30,6 +30,27 @@ from .state import WealthDeskState
 
 
 # ---------------------------------------------------------------------------
+# How the checkpointer works
+# ---------------------------------------------------------------------------
+# The checkpointer is LangGraph's persistence layer. It saves the entire
+# WealthDeskState (all fields including history) to SQLite after every
+# graph.invoke() call, and restores it before the next one.
+#
+# Turn 1: checkpointer finds nothing for this thread_id → starts fresh
+#         respond() runs → returns updated history
+#         checkpointer SAVES full state to SQLite
+#
+# Turn 2: checkpointer finds Turn 1 state → RESTORES it into WealthDeskState
+#         respond() runs with history already populated → LLM sees full context
+#         checkpointer SAVES updated state to SQLite
+#
+# state.py declares WHAT exists (the schema).
+# The checkpointer handles WHERE it lives between turns (SQLite).
+# You need both: without the declaration LangGraph rejects the field;
+# without the checkpointer history vanishes after every invoke().
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
 # TODO 3 of 4 -- update build_graph() to accept a checkpointer
 # ---------------------------------------------------------------------------
 # Change the signature so callers can pass in a checkpointer:

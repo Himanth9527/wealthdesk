@@ -45,7 +45,7 @@ git push
 
 ## What You Need Before Session 1
 
-1. Python 3.11 or later
+1. Python 3.11 (required for prebuilt Windows wheels of the native ChromaDB dependency)
 2. A Groq API key (free tier): https://console.groq.com/keys
 3. VS Code with the Python extension
 

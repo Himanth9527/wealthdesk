@@ -33,9 +33,9 @@ print("="*55 + "\n")
 print("Python")
 major, minor = sys.version_info[:2]
 check(
-    f"Python {major}.{minor} (need 3.11+)",
-    major == 3 and minor >= 11,
-    fix="Download Python 3.11+ from python.org"
+    f"Python {major}.{minor} (need 3.11)",
+    major == 3 and minor == 11,
+    fix="Install Python 3.11 from python.org and recreate the virtual environment"
 )
 
 # ── Required packages ──────────────────────────────────────
@@ -85,7 +85,7 @@ if groq_key and not groq_key.startswith("your_"):
         response = client.chat.completions.create(
             model="openai/gpt-oss-20b",
             messages=[{"role": "user", "content": "Reply with exactly: READY"}],
-            max_tokens=10,
+            max_tokens=100,
         )
         reply = response.choices[0].message.content.strip()
         check("Groq API responds", "READY" in reply.upper())

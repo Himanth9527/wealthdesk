@@ -19,6 +19,8 @@ What is new in Session 2:
 import sqlite3
 from uuid import uuid4
 
+# If you see "AttributeError: JsonPlusSerializer has no attribute dumps", run:
+#   pip install "langgraph-checkpoint-sqlite>=3.0.0,<4.0"
 from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.graph import END, START, StateGraph
 
